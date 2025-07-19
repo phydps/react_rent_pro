@@ -1,0 +1,165 @@
+// {
+//   "workbench.sideBar.location": "left",
+//   "cssrem.rootFontSize": 80,
+//   "git.ignoreWindowsGit27Warning": true,
+//   "eslint.codeAction.showDocumentation": {
+//     "enable": true
+//   },
+//   //改变注释颜色
+//   // "editor.tokenColorCustomizations": {
+//   //   "comments": "#ff4f81" // 注释
+//   // },
+
+//   //导入文件时是否携带文件的扩展名
+//   "path-autocomplete.extensionOnlmport": true,
+//   //配置@的路径提示
+//   "path-autocomplete.pathMappings": {
+//     "@": "${folder}/src"
+//   },
+//   //配置eslint
+//   "eslint.validate": ["javascript", "javascriptreact", "html", "vue"],
+//   // "eslint.run": "onSave",
+//   "editor.codeActionsOnSave": {
+//     "source.fixAll.eslint": "explicit"
+//   },
+//   "editor.mouseWheelZoom": true,
+//   "editor.minimap.renderCharacters": false,
+//   "debug.javascript.defaultRuntimeExecutable": {
+//     "pwa-node": "node"
+//   },
+//   "open-in-browser.default": "{\"open-in-browser.default\":\"Chrome\"}",
+//   "files.associations": {
+//     "*.cjson": "jsonc",
+//     "*.wxss": "css",
+//     "*.wxs": "javascript"
+//   },
+//   "emmet.includeLanguages": {
+//     "wxml": "html"
+//   },
+//   "minapp-vscode.disableAutoConfig": true,
+//   "[python]": {
+//     "editor.formatOnType": true
+//   },
+//   "editor.detectIndentation": false,
+//   "explorer.compactFolders": false,
+//   // html使用prettier格式化
+//   "[html]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "[vue]": {
+//     // "editor.defaultFormatter": "Vue.volar"
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "[javascript]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "[typescript]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   // json使用prettier格式化
+//   "[json]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "[jsonc]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "editor.tabSize": 2,
+//   "[scss]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "px2rem.rootFontSize": 64,
+//   "px2rem.autoRemovePrefixZero": false,
+//   "editor.formatOnSave": true // 保存时自动规范代码
+// }
+{
+  // ====================== 安全 & 交互 ======================
+  "security.workspace.trust.untrustedFiles": "open", // 对于不受信任的文件，直接打开
+
+  // ====================== 界面设置 ======================
+  "workbench.colorTheme": "One Dark Pro", // 代码编辑器主题
+  "workbench.iconTheme": "material-icon-theme", // 资源管理器图标主题
+  "workbench.layoutControl.enabled": false, // 关闭工作台布局控制
+  "window.zoomLevel": 1, // 界面缩放级别
+
+  // ====================== 编辑器行为 ======================
+  "editor.fontLigatures": false, // 禁用连字（特殊字符连接显示）
+  "editor.mouseWheelZoom": true, // 允许使用鼠标滚轮 + Ctrl 进行缩放
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // 默认代码格式化工具（Prettier）
+  "editor.formatOnPaste": true, // 粘贴时自动格式化代码
+  "editor.formatOnSave": true, // 保存时自动格式化代码
+  "editor.linkedEditing": true, // HTML 关联编辑（修改标签时同步修改闭合标签）
+  "editor.minimap.enabled": false, // 关闭代码小地图（minimap）
+  "editor.tabCompletion": "on", // 启用 Tab 补全
+  "editor.fontSize": 16, // 设置字体大小
+
+  // ====================== 文件管理 ======================
+  // "files.autoSave": "onFocusChange", // 失去焦点时自动保存
+  "explorer.confirmDelete": false, // 关闭文件删除确认框
+  "explorer.confirmDragAndDrop": false, // 关闭拖拽文件确认框
+  "files.trimTrailingWhitespace": true, // 自动删除行尾空格
+  "files.insertFinalNewline": true, // 文件末尾自动添加换行符
+  "files.exclude": {
+    "**/.git": true,
+    // "**/.vscode": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/out": true,
+    "**/LICENSE": true
+    // "**/.gitignore": true
+  }, // 资源管理器中隐藏无关文件夹
+
+  // ====================== 代码格式化（针对不同语言） ======================
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[plaintext]": {
+    "editor.defaultFormatter": "lkrms.inifmt"
+  },
+
+  // ====================== 文件类型关联 ======================
+  "files.associations": {
+    "*.html": "html",
+    "*.vue": "vue",
+    "*.ts": "typescript"
+  },
+
+  // ====================== JavaScript & Vue 设置 ======================
+  "vue.autoInsert.dotValue": true, // Vue 3 模板中自动补全 `.value`
+  "javascript.updateImportsOnFileMove.enabled": "always", // JS 文件移动时自动更新 import
+
+  // ====================== Git 相关配置 ======================
+  "gitlens.gitCommands.skipConfirmations": [
+    "fetch:command",
+    "stash-push:command",
+    "switch:command"
+  ], // GitLens 插件：跳过 fetch、stash、switch 的确认提示
+  "git.autofetch": true, // 自动从远程拉取最新代码
+  "git.enableSmartCommit": true, // 启用智能提交（未填写 commit message 也能提交）
+  "git.confirmSync": false, // 关闭 Git 同步确认框
+  "git.path": "D:/dev/app/git/Git/cmd/git.exe", // Git 可执行文件路径
+
+  // ====================== 其他设置 ======================
+  "extensions.ignoreRecommendations": true, // 忽略 VS Code 插件推荐
+  "diffEditor.ignoreTrimWhitespace": true, // 在 diff 视图中不忽略行尾空格变化
+
+  // ====================== Lingma AI 相关 ======================
+  "Lingma.cloudModelAutoTriggerGenerateLength": "long", // AI 生成长度（自动触发）
+  "Lingma.cloudModelManualTriggerGenerateLength": "long", // AI 生成长度（手动触发）
+  "Lingma.DisplayLanguage": "简体中文", // 界面语言
+  "Lingma.PreferredLanguage for AI Chat": "简体中文", // AI 聊天的首选语言
+  "Lingma.PreferredLanguage forCommitMessage": "简体中文",
+  "remote.SSH.remotePlatform": {
+    "hzh.sealos.run_ns-itmbl7jy_java-test": "linux"
+  },
+  "explorer.confirmPasteNative": false,
+  "gitblame.revsFile": [],
+  "typescript.updateImportsOnFileMove.enabled": "always"
+}
+{
+}

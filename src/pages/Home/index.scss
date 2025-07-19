@@ -1,0 +1,214 @@
+.homeSwiper {
+  // width: 100%;
+  // position: fixed;
+  top: 0px;
+  .topImageSwiper {
+    height: 212px;
+    position: relative;
+    .search-box {
+      position: absolute;
+      top: 25px;
+      width: 100%;
+      padding: 0 10px;
+      display: flex;
+      // 左侧白色区域
+      .search {
+        display: flex;
+        flex: 1;
+        height: 34px;
+        margin: 0 10px;
+        padding: 5px 5px 5px 8px;
+        border-radius: 3px;
+        background-color: #fff;
+
+        // 位置
+        .location {
+          line-height: 24px;
+          .icon-arrow {
+            margin-left: 2px;
+            font-size: 12px;
+            color: #7f7f80;
+          }
+        }
+
+        // 搜索表单
+        .form {
+          border-left: solid 1px #e5e5e5;
+          margin-left: 12px;
+          line-height: 24px;
+
+          .icon-seach {
+            vertical-align: middle;
+            padding: 0 2px 0 12px;
+            color: #9c9fa1;
+            font-size: 15px;
+          }
+
+          .text {
+            padding-left: 4px;
+            font-size: 13px;
+            color: #9c9fa1;
+          }
+        }
+      }
+
+      // 右侧地图图标
+      .icon-map {
+        font-size: 25px;
+        color: #fff;
+        line-height: 34px;
+      }
+    }
+  }
+
+  .menuNav {
+    display: flex;
+    margin: 0;
+    padding: 10px 0;
+    justify-content: space-around;
+    min-height: 48px;
+    .menuNavItem {
+      width: 15%;
+      text-align: center;
+      img {
+        width: -webkit-fill-available;
+      }
+      span {
+        font-size: 13px;
+        font-weight: normal;
+      }
+    }
+  }
+  // 租房小组样式：
+  .group {
+    background-color: #f6f5f6;
+    overflow: hidden;
+    padding: 0 10px;
+
+    .group-title {
+      position: relative;
+      margin: 15px 0px 15px 10px;
+      font-size: 15px;
+      .more {
+        color: #787d82;
+        position: absolute;
+        right: 0;
+        font-size: 14px;
+        font-weight: normal;
+      }
+    }
+
+    // 覆盖默认背景色
+    // .amd-grid .amd-flexbox {
+    //   background-color: inherit;
+
+    //   .am-flexbox-item .am-grid-item-content {
+    //     padding: 0;
+    //     padding-bottom: 10px;
+    //   }
+    // }
+
+    .group-item {
+      height: 75px;
+      .desc {
+        .title {
+          font-weight: bold;
+          font-size: 13px;
+          margin-bottom: 5px;
+        }
+        .info {
+          font-size: 12px;
+          color: #999;
+        }
+      }
+      img {
+        width: 55px;
+      }
+    }
+    .adm-grid-item {
+      background-color: #fff;
+      display: flex;
+      margin: 0 0 10px 0;
+      justify-content: space-around;
+      width: -webkit-fill-available;
+      height: 75px;
+      align-items: center;
+      .desc {
+        .title {
+          font-weight: bold;
+          font-size: 13px;
+          margin-bottom: 5px;
+        }
+        .info {
+          font-size: 12px;
+          color: #999;
+        }
+      }
+      img {
+        width: 55px;
+        height: 55px;
+      }
+      &:nth-child(odd) {
+        margin-right: 10px;
+      }
+    }
+  }
+  //资讯样式
+  .news {
+    padding: 10px;
+    background-color: #fff;
+    overflow: hidden;
+
+    .group-title {
+      margin: 10px 0 5px 10px;
+      font-size: 15px;
+    }
+
+    .news-item {
+      height: 120px;
+      padding: 15px 10px 15px 0;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .news-item:last-child {
+      border: 0;
+    }
+
+    .imgwrap {
+      float: left;
+      height: 90px;
+      width: 120px;
+    }
+
+    .img {
+      height: 90px;
+      width: 120px;
+    }
+
+    .newsContent {
+      overflow: hidden;
+      height: 100%;
+      padding-left: 12px;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+
+    .title {
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .info {
+      width: 100%;
+      color: #9c9fa1;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .message-title {
+      margin-bottom: 48px;
+    }
+  }
+}

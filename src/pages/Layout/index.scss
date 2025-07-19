@@ -1,0 +1,13 @@
+.rentLayout {
+  padding-bottom: 50px;
+  .bottom {
+    .adm-tab-bar {
+      border-top: solid 1px var(--adm-color-border);
+      overflow: hidden;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      background-color: #fff;
+    }
+  }
+}
