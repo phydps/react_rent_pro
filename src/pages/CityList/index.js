@@ -1,6 +1,6 @@
 import { getCityListApi, getHotCityApi } from "@/apis/home";
 import { useEffect, useState, useRef } from "react";
-import { NavBar } from "antd-mobile";
+import { NavBar, Toast } from "antd-mobile";
 import { List, AutoSizer } from "react-virtualized";
 import { useNavigate } from "react-router-dom";
 import "./index.scss";
@@ -65,6 +65,20 @@ const CityList = () => {
   }, [dataLoaded]);
 
   const navigate = useNavigate();
+  const HOUSE_CITY = ["北京", "上海", "广州", "深圳"];
+
+  //点击城市列表
+  const changeCity = ({ label, value }) => {
+    // console.log("444", currentCityInfo);
+    if (HOUSE_CITY.indexOf(label) > -1) {
+      localStorage.setItem("current_city", JSON.stringify({ label, value }));
+      navigate(-1);
+    } else {
+      Toast.show({
+        content: "该城市暂无房源",
+      });
+    }
+  };
   // List组件渲染每一行的方法：
   const rowRenderer = ({ key, index, isScrolling, isVisible, style }) => {
     // 获取每一行的字母索引
@@ -75,7 +89,11 @@ const CityList = () => {
         <div className="title">{formatCityIndex(titleFlag)}</div>
 
         {cityList[titleFlag].map((item) => (
-          <div className="name" key={item.value}>
+          <div
+            className="name"
+            key={item.value}
+            onClick={() => changeCity(item)}
+          >
             {item.label}
           </div>
         ))}
@@ -97,7 +115,7 @@ const CityList = () => {
         key={item}
         className="city-index-item"
         onClick={() => {
-          console.log("下标", index);
+          // console.log("下标", index);
           listRef.current.scrollToRow(index);
         }}
       >
@@ -108,7 +126,7 @@ const CityList = () => {
     ));
   };
 
-  //用于获取List组件中渲染行的信息
+  //用于获取List组件中渲染行的信息，以便和右侧快捷操作数据对比、同步
   const onRowsRendered = ({ startIndex }) => {
     if (activeIndex !== startIndex) {
       setActiveIndex(startIndex);
