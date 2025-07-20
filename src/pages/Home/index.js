@@ -5,6 +5,7 @@ import {
   getHomeSwiperAPI,
   getGroupListsAPI,
   getInfoListAPI,
+  getCurLocationApi,
 } from "@/apis/home";
 import { REQUEST_URL } from "@/components/CONST";
 import Nav1 from "@/assets/images/nav-1.png";
@@ -81,11 +82,9 @@ const Home = () => {
     myCity.get(async (res) => {
       const cityName = res.name;
       // console.log("当前城市名称", cityName);
-      const result = await axios.get(
-        `${REQUEST_URL}/area/info?name=${cityName}`
-      );
+      const result = await getCurLocationApi(cityName);
       // console.log(result);
-      setCurCityName(result.data.body.label);
+      setCurCityName(result.body.label);
     });
   }, []);
   return (
