@@ -1,5 +1,5 @@
 import { getCityListApi, getHotCityApi } from "@/apis/home";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { NavBar } from "antd-mobile";
 import { List, AutoSizer } from "react-virtualized";
 import { useNavigate } from "react-router-dom";
@@ -17,30 +17,58 @@ const CityList = () => {
   // 右侧侧边栏高亮标志
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const listRef = useRef(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  const getCityList = async () => {
+    const res = await getCityListApi(1);
+    const { cityList, cityIndex } = formatDataList(res.body);
+
+    //添加热门城市数据
+    const resHot = await getHotCityApi();
+    cityList["hot"] = resHot.body;
+    cityIndex.unshift("hot");
+
+    //添加当前定位的城市数据
+    const currentCityInfo = await getCurrentCity();
+    cityList["#"] = [currentCityInfo];
+    cityIndex.unshift("#");
+    // console.log("数据1", cityList, cityIndex, currentCityInfo);
+
+    return {
+      cityList,
+      cityIndex,
+    };
+    // setCityList(cityList);
+    // setCityIndex(cityIndex);
+  };
   useEffect(() => {
-    const getCityList = async () => {
-      const res = await getCityListApi(1);
-      const { cityList, cityIndex } = formatDataList(res.body);
-
-      //添加热门城市数据
-      const resHot = await getHotCityApi();
-      cityList["hot"] = resHot.body;
-      cityIndex.unshift("hot");
-
-      //添加当前定位的城市数据
-      const currentCityInfo = await getCurrentCity();
-      cityList["#"] = [currentCityInfo];
-      cityIndex.unshift("#");
-      // console.log("数据1", cityList, cityIndex, currentCityInfo);
-
+    async function fetchGetCityList() {
+      const { cityList, cityIndex } = await getCityList();
       setCityList(cityList);
       setCityIndex(cityIndex);
-    };
+      console.log("数据", cityIndex, cityList);
+      console.log("异步操作完成");
 
-    getCityList();
+      setDataLoaded(true);
+    }
+    fetchGetCityList();
+    // getCityList().then((data) => {
+    //   console.log("ddd", data);
+    //   listRef.current && listRef.current.measureAllRows();
+    // });
   }, []);
-  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (dataLoaded) {
+      //调用 measureAllRows，提前计算 List 中每一行的高度，实现 scrollToRow 的精确跳转
+      // 注意：调用这个方法的时候，需要保证 List 组件中已经有数据了！如果 List 组件中的数据为空，就会导致调用方法报错！
+      // 解决：只要保证这个方法是在 获取到数据之后 调用的即可。
+      listRef.current && listRef.current.measureAllRows();
+    }
+  }, [dataLoaded]);
+
+  const navigate = useNavigate();
   // List组件渲染每一行的方法：
   const rowRenderer = ({ key, index, isScrolling, isVisible, style }) => {
     // 获取每一行的字母索引
@@ -69,13 +97,29 @@ const CityList = () => {
   // 渲染侧边栏城市索引列表
   const renderCityIndex = () => {
     return cityIndex.map((item, index) => (
-      <li key={item} className="city-index-item">
+      <li
+        key={item}
+        className="city-index-item"
+        onClick={() => {
+          console.log("下标", index);
+          listRef.current.scrollToRow(index);
+        }}
+      >
         <span className={activeIndex === index ? "index-active" : ""}>
-          {item}
+          {item === "hot" ? "热" : item.toUpperCase()}
         </span>
       </li>
     ));
   };
+
+  //用于获取List组件中渲染行的信息
+  const onRowsRendered = ({ startIndex }) => {
+    if (activeIndex !== startIndex) {
+      setActiveIndex(startIndex);
+      // console.log("startIndex", startIndex);
+    }
+  };
+
   return (
     <div className="citylist">
       {/* 导航栏 */}
@@ -86,11 +130,14 @@ const CityList = () => {
       <AutoSizer>
         {({ width, height }) => (
           <List
+            ref={listRef}
             width={width}
             height={height}
             rowCount={cityIndex.length}
             rowHeight={getRowHeight}
             rowRenderer={rowRenderer}
+            onRowsRendered={onRowsRendered}
+            scrollToAlignment="start"
           ></List>
         )}
       </AutoSizer>
