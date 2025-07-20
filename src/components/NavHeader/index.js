@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { NavBar } from "antd-mobile";
 import PropTypes from "prop-types";
-import "./index.scss";
+// import "./index.scss";
+import styles from "./index.module.css";
 
 const NavHeader = ({ children, onBack }) => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const NavHeader = ({ children, onBack }) => {
     navigate(-1);
   };
   return (
-    <NavBar className="navbar" onBack={onBack || defaultHandler}>
+    <NavBar className={styles.navBar} onBack={onBack || defaultHandler}>
       {children}
     </NavBar>
   );
