@@ -5,6 +5,7 @@ import { List, AutoSizer } from "react-virtualized";
 import { useNavigate } from "react-router-dom";
 import "./index.scss";
 import { formatDataList, getCurrentCity, formatCityIndex } from "@/utils/util";
+import NavHeader from "@/components/NavHeader";
 
 // 索引（A、B等）的高度
 const TITLE_HEIGHT = 36;
@@ -137,9 +138,10 @@ const CityList = () => {
   return (
     <div className="citylist">
       {/* 导航栏 */}
-      <NavBar className="navbar" onBack={() => navigate(-1)}>
+      {/* <NavBar className="navbar" onBack={() => navigate(-1)}>
         城市选择
-      </NavBar>
+      </NavBar> */}
+      <NavHeader>城市选择</NavHeader>
       {/* 城市列表 */}
       <AutoSizer>
         {({ width, height }) => (

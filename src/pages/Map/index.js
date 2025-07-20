@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import "./index.scss";
+import NavHeader from "@/components/NavHeader";
 const Map = () => {
   useEffect(() => {
     //初始化地图实例
@@ -11,6 +12,8 @@ const Map = () => {
   }, []);
   return (
     <div className="map">
+      {/* 导航栏 */}
+      <NavHeader>地图找房</NavHeader>
       <div id="container"></div>
     </div>
   );
