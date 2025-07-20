@@ -47,16 +47,12 @@ const CityList = () => {
       const { cityList, cityIndex } = await getCityList();
       setCityList(cityList);
       setCityIndex(cityIndex);
-      console.log("数据", cityIndex, cityList);
-      console.log("异步操作完成");
+      // console.log("数据", cityIndex, cityList);
+      // console.log("异步操作完成");
 
       setDataLoaded(true);
     }
     fetchGetCityList();
-    // getCityList().then((data) => {
-    //   console.log("ddd", data);
-    //   listRef.current && listRef.current.measureAllRows();
-    // });
   }, []);
 
   useEffect(() => {
