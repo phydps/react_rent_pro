@@ -1,26 +1,101 @@
-import { getCityListApi } from "@/apis/home";
-import { useEffect } from "react";
+import { getCityListApi, getHotCityApi } from "@/apis/home";
+import { useEffect, useState } from "react";
 import { NavBar } from "antd-mobile";
+import { List, AutoSizer } from "react-virtualized";
 import { useNavigate } from "react-router-dom";
 import "./index.scss";
-import { formatDataList } from "@/utils/util";
+import { formatDataList, getCurrentCity, formatCityIndex } from "@/utils/util";
+
+// 索引（A、B等）的高度
+const TITLE_HEIGHT = 36;
+// 每个城市名称的高度
+const NAME_HEIGHT = 50;
 
 const CityList = () => {
+  const [cityList, setCityList] = useState({});
+  const [cityIndex, setCityIndex] = useState([]);
+  // 右侧侧边栏高亮标志
+  const [activeIndex, setActiveIndex] = useState(0);
+
   useEffect(() => {
     const getCityList = async () => {
       const res = await getCityListApi(1);
-      console.log("数据", res);
       const { cityList, cityIndex } = formatDataList(res.body);
-      console.log("数据1", cityList, cityIndex);
+
+      //添加热门城市数据
+      const resHot = await getHotCityApi();
+      cityList["hot"] = resHot.body;
+      cityIndex.unshift("hot");
+
+      //添加当前定位的城市数据
+      const currentCityInfo = await getCurrentCity();
+      cityList["#"] = [currentCityInfo];
+      cityIndex.unshift("#");
+      // console.log("数据1", cityList, cityIndex, currentCityInfo);
+
+      setCityList(cityList);
+      setCityIndex(cityIndex);
     };
+
     getCityList();
   }, []);
   const navigate = useNavigate();
+
+  // List组件渲染每一行的方法：
+  const rowRenderer = ({ key, index, isScrolling, isVisible, style }) => {
+    // 获取每一行的字母索引
+    const titleFlag = cityIndex[index];
+    // console.log(cityIndex);
+    return (
+      <div key={key} style={style} className="city">
+        <div className="title">{formatCityIndex(titleFlag)}</div>
+
+        {cityList[titleFlag].map((item) => (
+          <div className="name" key={item.value}>
+            {item.label}
+          </div>
+        ))}
+      </div>
+    );
+  };
+  // 创建动态计算每一行高度的方法
+  const getRowHeight = ({ index }) => {
+    //每一行高度= 标题高度 + 每行城市标签高度 * 城市个数
+    const height =
+      TITLE_HEIGHT + NAME_HEIGHT * cityList[cityIndex[index]].length;
+    return height;
+  };
+
+  // 渲染侧边栏城市索引列表
+  const renderCityIndex = () => {
+    return cityIndex.map((item, index) => (
+      <li key={item} className="city-index-item">
+        <span className={activeIndex === index ? "index-active" : ""}>
+          {item}
+        </span>
+      </li>
+    ));
+  };
   return (
     <div className="citylist">
+      {/* 导航栏 */}
       <NavBar className="navbar" onBack={() => navigate(-1)}>
         城市选择
       </NavBar>
+      {/* 城市列表 */}
+      <AutoSizer>
+        {({ width, height }) => (
+          <List
+            width={width}
+            height={height}
+            rowCount={cityIndex.length}
+            rowHeight={getRowHeight}
+            rowRenderer={rowRenderer}
+          ></List>
+        )}
+      </AutoSizer>
+      {/* 渲染侧边栏导航 */}
+      <ul className="cityIndex">{renderCityIndex()}</ul>
     </div>
   );
 };

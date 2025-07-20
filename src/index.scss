@@ -12,8 +12,12 @@ body {
   box-sizing: border-box;
 }
 h3,
-p {
+p,
+ul {
   margin: 0;
+}
+ul {
+  list-style: none;
 }
 html,
 body,

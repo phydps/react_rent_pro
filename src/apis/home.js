@@ -52,7 +52,16 @@ const getCityListApi = (levelInput) => {
     },
   });
 };
+
+const getHotCityApi = () => {
+  return request({
+    url: "/area/hot",
+    method: "GET",
+  });
+};
+
 export {
+  getHotCityApi,
   getCityListApi,
   getCurLocationApi,
   getHomeSwiperAPI,

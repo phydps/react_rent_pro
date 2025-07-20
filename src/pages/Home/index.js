@@ -13,7 +13,7 @@ import Nav2 from "@/assets/images/nav-2.png";
 import Nav3 from "@/assets/images/nav-3.png";
 import Nav4 from "@/assets/images/nav-4.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { getCurrentCity } from "@/utils/util";
 // 导航菜单数据
 const navs = [
   {
@@ -42,9 +42,9 @@ const navs = [
   },
 ];
 // 获取地理位置信息
-navigator.geolocation.getCurrentPosition((position) => {
-  console.log("当前位置信息：", position);
-});
+// navigator.geolocation.getCurrentPosition((position) => {
+//   console.log("当前位置信息：", position);
+// });
 
 const Home = () => {
   const ref = useRef(null);
@@ -73,19 +73,25 @@ const Home = () => {
       setNews(res.body);
     };
 
+    //根据IP定位获取当前城市信息,并设置 搜索选择框的当前城市值
+    const getCurrentCityInfo = async () => {
+      const currentCityInfo = await getCurrentCity();
+      setCurCityName(currentCityInfo.label);
+    };
+
     getHomeSwiper();
     getGroupLists();
     getInfoList();
-
+    getCurrentCityInfo();
     //根据IP定位获取当前城市名
-    var myCity = new window.BMap.LocalCity();
-    myCity.get(async (res) => {
-      const cityName = res.name;
-      // console.log("当前城市名称", cityName);
-      const result = await getCurLocationApi(cityName);
-      // console.log(result);
-      setCurCityName(result.body.label);
-    });
+    // var myCity = new window.BMap.LocalCity();
+    // myCity.get(async (res) => {
+    //   const cityName = res.name;
+    //   // console.log("当前城市名称", cityName);
+    //   const result = await getCurLocationApi(cityName);
+    //   // console.log(result);
+    //   setCurCityName(result.body.label);
+    // });
   }, []);
   return (
     <div className="homeSwiper">
