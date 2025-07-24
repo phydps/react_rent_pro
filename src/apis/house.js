@@ -17,7 +17,7 @@ const getCommunityHousesApi = (inputId) => {
     url: "/houses",
     method: "GET",
     params: {
-      id: inputId,
+      cityId: inputId,
     },
   });
 };

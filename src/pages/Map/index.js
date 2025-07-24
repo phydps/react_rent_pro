@@ -5,6 +5,9 @@ import NavHeader from "@/components/NavHeader";
 import { getAreaHouseApi, getCommunityHousesApi } from "@/apis/house";
 import styles from "./index.module.css";
 import { Link } from "react-router-dom";
+import { REQUEST_URL } from "@/components/CONST";
+import { Toast } from "antd-mobile";
+
 const BMap = window.BMap;
 // 覆盖物样式
 const labelStyle = {
@@ -34,7 +37,7 @@ export default class Map extends React.Component {
     //初始化地图实例
     const map = new BMap.Map("container");
     this.map = map;
-    console.log("map数据", map);
+    // console.log("map数据", map);
 
     // 创建地址解析实例
     const myGeo = new BMap.Geocoder();
@@ -48,7 +51,7 @@ export default class Map extends React.Component {
           //添加比例尺、缩放控件
           map.addControl(new BMap.NavigationControl());
           map.addControl(new BMap.ScaleControl());
-          console.log("map数据----", map);
+          // console.log("map数据----", map);
 
           this.renderOverlays(value);
           // //获取房源数据
@@ -102,22 +105,42 @@ export default class Map extends React.Component {
       },
       label
     );
+
+    //功能：滚动地图时隐藏房源列表
+    map.addEventListener("movestart", () => {
+      if (this.state.isShowList) {
+        this.setState({
+          isShowList: false,
+        });
+      }
+    });
   };
+
   /*渲染覆盖物入口
   1.接收区域id参数，获取该区域下的房源数据
   2.获取房源类型以及下级地图缩放比例
   */
   renderOverlays = async (id) => {
-    //获取房源数据
-    const res = await getAreaHouseApi(id);
-    // console.log("城市数据", res);
-    //获取地图缩放级别和覆盖物类型
-    const { nextZoom, type } = this.getTypeAndZoom();
+    try {
+      Toast.show({
+        icon: "loading",
+        content: "加载中…",
+        duration: 0,
+      });
+      //获取房源数据
+      const res = await getAreaHouseApi(id);
+      Toast.clear();
+      // console.log("城市数据", res);
+      //获取地图缩放级别和覆盖物类型
+      const { nextZoom, type } = this.getTypeAndZoom();
 
-    res.body.forEach((element) => {
-      //创建覆盖物
-      this.createOverlays(element, nextZoom, type);
-    });
+      res.body.forEach((element) => {
+        //创建覆盖物
+        this.createOverlays(element, nextZoom, type);
+      });
+    } catch (error) {
+      Toast.clear();
+    }
   };
 
   //创建覆盖物函数
@@ -144,7 +167,7 @@ export default class Map extends React.Component {
   getTypeAndZoom = () => {
     //获取当前地图对象的缩放级别
     const zoom = this.map.getZoom();
-    console.log("当前缩放级别", zoom);
+    // console.log("当前缩放级别", zoom);
     let nextZoom, type;
     if (zoom >= 10 && zoom < 12) {
       nextZoom = 13;
@@ -161,6 +184,7 @@ export default class Map extends React.Component {
       type,
     };
   };
+  //圆形覆盖物
   createCircle = (point, name, count, id, zoom) => {
     const options = {
       position: point,
@@ -195,6 +219,7 @@ export default class Map extends React.Component {
     //添加覆盖物到地图中
     this.map.addOverlay(label);
   };
+  //矩形覆盖物
   createRect = (point, name, count, id) => {
     // console.log("进入createRect");
     const options = {
@@ -216,22 +241,76 @@ export default class Map extends React.Component {
     // 设置样式
     label.setStyle(labelStyle);
     //添加点击事件
-    label.addEventListener("click", () => {
+    label.addEventListener("click", (e) => {
       // 调用接口方法，获取该小区的房源数据
       this.fetchCommunityHousesApi(id);
+      // console.log("Test", e);
+      //点击具体小区覆盖物，滚动该小区覆盖物到中间位置
+      const target = e.changedTouches[0];
+      this.map.panBy(
+        window.innerWidth / 2 - target.clientX,
+        (window.innerHeight - 330) / 2 - target.clientY
+      );
     });
     //添加覆盖物到地图中
     this.map.addOverlay(label);
   };
-
+  // 获取小区房源
   fetchCommunityHousesApi = async (id) => {
-    const res = await getCommunityHousesApi(id);
-    console.log("小区房源数据：", res);
-    this.setState({
-      housesList: res.body.list,
-      isShowList: true,
-    });
+    try {
+      Toast.show({
+        icon: "loading",
+        content: "加载中…",
+        duration: 0,
+      });
+      const res = await getCommunityHousesApi(id);
+      Toast.clear();
+      // console.log("小区房源数据：", res);
+      this.setState({
+        housesList: res.body.list,
+        //显示列表
+        isShowList: true,
+      });
+    } catch (error) {
+      Toast.clear();
+    }
   };
+
+  //小区房源展示列表提取
+  renderHousesList() {
+    return this.state.housesList.map((item) => (
+      <div className={styles.house} key={item.houseCode}>
+        <div className={styles.imgWrap}>
+          <img
+            className={styles.img}
+            src={`${REQUEST_URL}${item.houseImg}`}
+            alt=""
+          />
+        </div>
+        <div className={styles.content}>
+          <h3 className={styles.title}>{item.title}</h3>
+          <div className={styles.desc}>{item.desc}</div>
+          <div>
+            {/* 多个标签样式 */}
+            {item.tags.map((tag, index) => {
+              const tagClass = "tag" + (index + 1);
+              return (
+                <span
+                  className={[styles.tag, styles[tagClass]].join(" ")}
+                  key={tag}
+                >
+                  {tag}
+                </span>
+              );
+            })}
+          </div>
+          <div className={styles.price}>
+            <span className={styles.priceNum}>{item.price}</span> 元/月
+          </div>
+        </div>
+      </div>
+    ));
+  }
 
   render() {
     return (
@@ -255,34 +334,7 @@ export default class Map extends React.Component {
 
           <div className={styles.houseItems}>
             {/* 房屋结构 */}
-            {this.state.housesList.map((item) => (
-              <div className={styles.house} key={item.houseCode}>
-                <div className={styles.imgWrap}>
-                  <img
-                    className={styles.img}
-                    src={`http://localhost:8080${item.houseImg}`}
-                    alt=""
-                  />
-                </div>
-                <div className={styles.content}>
-                  <h3 className={styles.title}>{item.title}</h3>
-                  <div className={styles.desc}>{item.desc}</div>
-                  <div>
-                    {item.tags.map((tag) => (
-                      <span
-                        className={[styles.tag, styles.tag1].join(" ")}
-                        key={tag}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <div className={styles.price}>
-                    <span className={styles.priceNum}>{item.price}</span> 元/月
-                  </div>
-                </div>
-              </div>
-            ))}
+            {this.renderHousesList()}
           </div>
         </div>
       </div>
