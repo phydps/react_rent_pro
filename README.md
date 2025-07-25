@@ -1,8 +1,8 @@
 # Getting Started with Create React App
 
-![image](https://github.com/phydps/react_rent_pro/blob/main/test/home.gif)
-![image](https://github.com/phydps/react_rent_pro/blob/main/test/mapHouses.gif)
-![image](https://github.com/phydps/react_rent_pro/blob/main/test/selectCity.gif)
+![img](https://github.com/phydps/react_rent_pro/blob/main/test/home.gif)
+![img](https://github.com/phydps/react_rent_pro/blob/main/test/mapHouses.gif)
+![img](https://github.com/phydps/react_rent_pro/blob/main/test/selectCity.gif)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
