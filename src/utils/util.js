@@ -67,4 +67,33 @@ const getCurrentCity = () => {
   }
 };
 
-export { formatDataList, getCurrentCity, formatCityIndex };
+/*
+  操作本地中的token
+*/
+const TOKEN_KEY = "hkzf_token";
+
+const getToken = () => {
+  return localStorage.getItem(TOKEN_KEY);
+};
+
+const setToken = (token) => {
+  localStorage.setItem(TOKEN_KEY, token);
+};
+
+const removeToken = () => {
+  localStorage.removeItem(TOKEN_KEY);
+};
+
+const hasToken = () => {
+  return !!getToken();
+};
+
+export {
+  formatDataList,
+  getCurrentCity,
+  formatCityIndex,
+  getToken,
+  setToken,
+  removeToken,
+  hasToken,
+};

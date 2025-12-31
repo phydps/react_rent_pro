@@ -43,6 +43,9 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.1.0"
+    "@craco/craco": "^7.1.0",
+    "classnames": "^2.5.1",
+    "formik": "^2.4.9",
+    "yup": "^1.7.1"
   }
 }

@@ -6,6 +6,9 @@ import HouseList from "@/pages/List";
 import Profile from "@/pages/Profile";
 import CityList from "@/pages/CityList";
 import Map from "@/pages/Map";
+import Login from "@/pages/Login/index";
+import Detail from "@/pages/HouseDetail";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,6 +40,14 @@ const router = createBrowserRouter([
   {
     path: "/map",
     element: <Map />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/detail/:id",
+    element: <Detail />,
   },
 ]);
 

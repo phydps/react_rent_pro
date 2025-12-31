@@ -2,6 +2,7 @@
   height: 100%;
   padding-top: 45px;
 }
+
 .container {
   height: 100%;
 }
@@ -113,6 +114,7 @@
   height: 100%;
   padding-bottom: 45px;
 }
+
 .house {
   height: 120px;
   position: relative;
@@ -176,14 +178,17 @@
   margin-right: 5px;
   line-height: 12px;
 }
+
 .tag1 {
   color: #39becd;
   background: #e1f5f8;
 }
+
 .tag2 {
   color: #3fc28c;
   background: #e1f5ed;
 }
+
 .tag3 {
   color: #5aabfd;
   background: #e6f2ff;

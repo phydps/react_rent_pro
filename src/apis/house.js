@@ -22,4 +22,12 @@ const getCommunityHousesApi = (inputId) => {
   });
 };
 
-export { getAreaHouseApi, getCommunityHousesApi };
+//根据房屋id查询具体数据
+const getHouseDetailApi = (houseId) => {
+  return request({
+    url: `/houses/${houseId}`,
+    method: "GET",
+  });
+};
+
+export { getAreaHouseApi, getCommunityHousesApi, getHouseDetailApi };

@@ -1,6 +1,10 @@
 .navBar {
   color: #333;
   background-color: #f6f5f6;
+  /* margin-top: -45px; */
+}
+
+.navBar_margin_top {
   margin-top: -45px;
 }
 

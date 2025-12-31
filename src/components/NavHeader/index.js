@@ -10,7 +10,10 @@ const NavHeader = ({ children, onBack }) => {
     navigate(-1);
   };
   return (
-    <NavBar className={styles.navBar} onBack={onBack || defaultHandler}>
+    <NavBar
+      className={[styles.navBar, styles.navBar_margin_top].join(" ")}
+      onBack={onBack || defaultHandler}
+    >
       {children}
     </NavBar>
   );
