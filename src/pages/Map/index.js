@@ -453,7 +453,7 @@ const HousesMap = () => {
       });
       //获取房源数据
       const res = await getAreaHouseApi(id);
-      Toast.clear();
+      // Toast.clear();
       // console.log("城市数据", res);
       //获取地图缩放级别和覆盖物类型
       const { nextZoom, type } = getTypeAndZoom();
@@ -463,6 +463,8 @@ const HousesMap = () => {
         createOverlays(element, nextZoom, type);
       });
     } catch (error) {
+      // Toast.clear();
+    } finally {
       Toast.clear();
     }
   };

@@ -30,4 +30,18 @@ const getHouseDetailApi = (houseId) => {
   });
 };
 
-export { getAreaHouseApi, getCommunityHousesApi, getHouseDetailApi };
+//根据条件查询房屋列表
+const getHouseListApi = (params) => {
+  return request({
+    url: `/houses`,
+    method: "GET",
+    params: { ...params },
+  });
+};
+
+export {
+  getAreaHouseApi,
+  getCommunityHousesApi,
+  getHouseDetailApi,
+  getHouseListApi,
+};
