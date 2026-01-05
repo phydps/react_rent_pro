@@ -136,22 +136,23 @@ const HouseDetail = () => {
 
       {/* 轮播图 */}
       <div className="slides">
-        <Swiper
-          loop
-          autoplay
-          onIndexChange={(i) => {
-            // console.log(i, "onIndexChange1");
-          }}
-        >
-          {houseInfo &&
-            houseInfo.houseImg.map((item, index) => (
+        {houseInfo && (
+          <Swiper
+            loop
+            autoplay
+            onIndexChange={(i) => {
+              console.log(i, "onIndexChange1");
+            }}
+          >
+            {houseInfo.houseImg.map((item, index) => (
               <Swiper.Item key={`${item}_${index}`}>
                 <a href="http://www.alipay.com" key={item}>
                   <img src={`${REQUEST_URL}${item}`} alt="" />
                 </a>
               </Swiper.Item>
             ))}
-        </Swiper>
+          </Swiper>
+        )}
       </div>
 
       {/* 房屋基础信息 */}
@@ -202,7 +203,7 @@ const HouseDetail = () => {
       </div>
 
       {/* 渲染百度地图 */}
-      <div className="map">
+      <div className="house_map">
         <div className="mapTitle">
           小区：
           <span>{houseInfo && houseInfo.community}</span>
