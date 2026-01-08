@@ -1,4 +1,4 @@
-import styles from "./listItem.module.scss";
+import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 import { REQUEST_URL } from "@/components/CONST";
 

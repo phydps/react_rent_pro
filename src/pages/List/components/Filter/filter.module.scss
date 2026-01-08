@@ -1,0 +1,49 @@
+.filter {
+  position: relative;
+  z-index: 3;
+  height: 40px;
+  :global {
+    .content {
+      position: relative;
+      z-index: 3;
+      background-color: #fff;
+    }
+    .mask {
+      position: fixed;
+      z-index: 2;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .content {
+      // filter-title的样式
+      .filter_title {
+        text-align: center;
+        background-color: #fff;
+        height: 40px;
+        border-bottom: 1px solid #e4e6f0;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        .dropdown {
+          display: inline-block;
+          font-size: 17px;
+          background-color: #fff;
+          .icon-arrow {
+            margin-left: 3px;
+            color: #bbb;
+            font-size: 12px;
+          }
+        }
+        .selected {
+          color: #21b97a;
+          .icon-arrow {
+            color: #21b97a;
+          }
+        }
+      }
+    }
+  }
+}

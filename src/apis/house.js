@@ -39,9 +39,16 @@ const getHouseListApi = (params) => {
   });
 };
 
+const getHouseCondition = (id) => {
+  return request({
+    url: `/houses/condition?id=${id}`,
+    method: "GET",
+  });
+};
 export {
   getAreaHouseApi,
   getCommunityHousesApi,
   getHouseDetailApi,
   getHouseListApi,
+  getHouseCondition,
 };

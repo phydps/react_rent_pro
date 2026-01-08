@@ -17,7 +17,8 @@ import {
 } from "react-virtualized";
 import noDataList from "@/assets/images/not-found.png";
 import { REQUEST_URL } from "@/components/CONST";
-import HouseListItem from "./components/ListItem";
+import HouseListItem from "./components/ListItem/index";
+import Filter from "./components/Filter";
 
 const HouseList = () => {
   const [cityName, setCityName] = useState("");
@@ -139,6 +140,20 @@ const HouseList = () => {
       </InfiniteLoader>
     );
   };
+  const onFilter = (selectedValues) => {
+    // const filters = this.formatFilters(selectedValues);
+    // this.setState(
+    //   {
+    //     filters,
+    //   },
+    //   () => {
+    //     // 发送ajax请求
+    //     this.getHouseList();
+    //   }
+    // );
+    console.log("onFilter", selectedValues);
+    window.scrollTo(0, 0);
+  };
 
   return (
     <div className={styles.house}>
@@ -162,7 +177,9 @@ const HouseList = () => {
         </div>
       </div>
       <Sticky>
-        <div>测试</div>
+        <div>
+          <Filter onFilter={onFilter}></Filter>
+        </div>
       </Sticky>
       {/* 渲染房屋长列表 */}
       {renderList()}

@@ -57,19 +57,19 @@ const Sticky = ({ children, size = 40 }) => {
   const contentRef = useRef(null);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll());
+    window.addEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
     return () => {
       // console.log("Component will unmount");
-      window.removeEventListener("scroll", handleScroll());
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const handleScroll = () => {
     // console.log('哈哈')
-    const { top } = placeHolderRef.current.getBoundingClientRect();
+    const { top } = placeHolderRef.current?.getBoundingClientRect();
     // console.log(top)
     if (top <= 0) {
       // content就需要固定定位了
